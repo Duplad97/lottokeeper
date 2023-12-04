@@ -1,0 +1,16 @@
+.home-page {
+    height: 95vh;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .button-group {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 50%;
+        margin-top: 35px;
+    }
+}

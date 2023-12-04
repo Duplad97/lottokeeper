@@ -1,0 +1,24 @@
+.player-page {
+    .player {
+        .player-details {
+            margin-top: 30px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .ticket-table-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .reset-button {
+            margin-top: 70px;
+            position: absolute;
+            right: 10px;
+            width: 15%; 
+            padding: 10px;
+        }
+    }
+}
