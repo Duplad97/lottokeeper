@@ -23,7 +23,7 @@ const routes = [
 
 function Router() {
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/lottokeeper">
             <Switch>
                 {routes.map(route => {
                     return (
