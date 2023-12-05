@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { ITicket } from "../../store/userSlice";
 import CustomNoRowsOverlay from "../../_helper/custom-no-rows.component";
@@ -51,7 +51,7 @@ function TicketList(props: IProps) {
                     sortable: false,
                     width: 150,
                     valueGetter: (params: GridValueGetterParams) =>
-                        `${params.row.prize} akcse`,
+                        `${Intl.NumberFormat('hu-HU', { maximumSignificantDigits: 3 }).format(params.row.prize)} akcse`,
                 });
         }
 
@@ -68,7 +68,7 @@ function TicketList(props: IProps) {
     }
 
     return (
-        <Box sx={{ height: 450, width: '48%' }}>
+        <Box sx={{ height: 480, width: '48%' }}>
             <Typography variant="h6">{props.onlyDrawn ? "Kihúzott szelvények" : "Összes feladott szelvény"}</Typography>
             <DataGrid
                 rows={props.data}
@@ -76,14 +76,14 @@ function TicketList(props: IProps) {
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 5,
+                            pageSize: 7,
                         },
                     },
                 }}
                 slots={{
                     noRowsOverlay: CustomNoRowsOverlay,
                   }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[7]}
                 //checkboxSelection
                 disableRowSelectionOnClick
             />

@@ -1,19 +1,20 @@
-import { useEffect, useState } from "react";
-import { IUserState, reset, setUserName } from "../../store/userSlice";
-import { Button, Card, TextField, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
-import ResetPlayerDialog from "./reset-player-dialog.component";
+import { useState } from "react";
+import { setUserName } from "../../store/userSlice";
+import { Button, TextField, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import ResetDialog from "../../_helper/reset-dialog.component";
 import { Link } from "react-router-dom";
 import TicketDialog from "./ticket-dialog.component";
 import TicketList from "./ticket-list.component";
+import { RootState } from "../../store/store";
 
 interface IProps {
-    player: IUserState
 }
 
 function Player(props: IProps) {
-    const [player, setPlayer] = useState<IUserState>(props.player);
-    const [name, setName] = useState<string>(props.player.name);
+    const player = useSelector((state) => (state as RootState).userReducer);
+
+    const [name, setName] = useState<string>(player.name);
 
     //Dialogs
     const [showResetModal, setShowResetModal] = useState<boolean>(false);
@@ -21,13 +22,8 @@ function Player(props: IProps) {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        setPlayer(props.player);
-    }, [props.player])
-
     const saveName = () => {
         if (name && name.length >= 3) {
-            setPlayer({ ...player, name: name });
             dispatch(setUserName(name));
         }
     }
@@ -43,7 +39,7 @@ function Player(props: IProps) {
                         <div className="player-details">
                             <div>
                                 <Typography>Név: {player.name}</Typography>
-                                <Typography>Akcse: {player.money}</Typography>
+                                <Typography>Akcse: {Intl.NumberFormat('hu-HU', { maximumSignificantDigits: 3 }).format(player.money)}</Typography>
                             </div>
                             <Button onClick={() => setShowTicketModal(true)} variant="outlined">Szelvény feladás</Button>
                         </div>
@@ -52,18 +48,16 @@ function Player(props: IProps) {
                             <TicketList onlyDrawn={false} data={player.tickets} />
                             <TicketList onlyDrawn={true} data={player.tickets.filter(ticket => ticket.drawn)} />
                         </div>
-
-                        <Button className="reset-button" onClick={() => setShowResetModal(true)} variant="outlined">Visszaállítás</Button>
                     </div>
                     :
-                    <div>
+                    <div className="player-name-form">
                         <TextField value={name} onChange={(e) => setName(e.target.value)} label="Játékos név" />
                         <Button variant="outlined" onClick={saveName}>Mentés</Button>
                     </div>
                 }
             </div>
 
-            <ResetPlayerDialog show={showResetModal} setShow={setShowResetModal} />
+            <ResetDialog show={showResetModal} setShow={setShowResetModal} />
             <TicketDialog show={showTicketModal} setShow={setShowTicketModal} />
         </>
     )

@@ -1,0 +1,41 @@
+.operator-page {
+    .operator {
+        .operator-details {
+            margin-top: 30px;
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .simulate-form-container {
+                input {
+                    height: 5px;
+                    width: 35px;
+                    padding: 15px;
+                    border-radius: 4px;
+                    border: 1px solid #dce0e6;
+                }
+
+                .generate-button {
+                    margin-left: 10px;
+                }
+            }
+        }
+
+
+
+        .ticket-table-container {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reset-button {
+            margin-top: 70px;
+            position: absolute;
+            right: 10px;
+            width: 15%; 
+            padding: 10px;
+        }
+    }
+}

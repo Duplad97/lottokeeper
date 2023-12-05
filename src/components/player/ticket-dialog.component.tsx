@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Card } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Card } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { ITicket, setMoney, setTickets } from "../../store/userSlice";
+import { setOperatorMoney } from "../../store/operatorSlice";
 
 interface IProps {
     show: boolean
@@ -13,6 +14,7 @@ function TicketDialog(props:IProps) {
     const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
 
     const user = useSelector((state) => (state as RootState).userReducer);
+    const operator = useSelector((state) => (state as RootState).operatorReducer);
 
     const dispatch = useDispatch();
 
@@ -35,11 +37,13 @@ function TicketDialog(props:IProps) {
                 numbers: selectedNumbers,
                 drawn: false,
                 date: new Date(),
+                score: 0,
             }
             updatedTickets.push(newTicketData);
             dispatch(setTickets(updatedTickets));
-            const updatedMoney = user.money - 500;
-            dispatch(setMoney(updatedMoney));
+            dispatch(setMoney(user.money - 500));
+            
+            dispatch(setOperatorMoney(operator.money + 500));
             props.setShow(false);
         }
     }

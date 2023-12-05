@@ -1,4 +1,4 @@
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { DataGrid, GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
 import { ITicket } from "../../store/userSlice";
 import CustomNoRowsOverlay from "../../_helper/custom-no-rows.component";
@@ -6,7 +6,7 @@ import moment from "moment";
 
 interface IProps {
     data: ITicket[]
-    onlyDrawn: boolean
+    drawn: boolean
 }
 
 
@@ -24,18 +24,9 @@ function OperatorTicketList(props: IProps) {
                 valueGetter: (params: GridValueGetterParams) =>
                     `${params.row.numbers.join(', ')}`,
             },
-            {
-                field: 'drawn',
-                headerName: 'Húzás megtörtént',
-                width: 150,
-                editable: true,
-                sortable: false,
-                valueGetter: (params: GridValueGetterParams) =>
-                    `${params.row.drawn ? "Igen" : "Nem"}`,
-            },
         ]
 
-        if (props.onlyDrawn) {
+        if (props.drawn) {
             columns.push(
                 {
                     field: 'score',
@@ -51,7 +42,7 @@ function OperatorTicketList(props: IProps) {
                     sortable: false,
                     width: 150,
                     valueGetter: (params: GridValueGetterParams) =>
-                        `${params.row.prize} akcse`,
+                        `${Intl.NumberFormat('hu-HU', { maximumSignificantDigits: 3 }).format(params.row.prize || 0)} akcse`,
                 });
         }
 
@@ -70,6 +61,7 @@ function OperatorTicketList(props: IProps) {
                 headerName: 'Feladás dátuma',
                 width: 150,
                 editable: true,
+                sortable: false,
                 valueGetter: (params: GridValueGetterParams) =>
                     moment(params.row.date).format("YYYY.MM.DD (HH:mm)"),
             }
@@ -79,22 +71,22 @@ function OperatorTicketList(props: IProps) {
     }
 
     return (
-        <Box sx={{ height: 450, width: '48%' }}>
-            <Typography variant="h6">{props.onlyDrawn ? "Kihúzott szelvények" : "Összes feladott szelvény"}</Typography>
+        <Box sx={{ height: 480, width: '85%' }}>
+            <Typography variant="h6">{"Szelvények"}</Typography>
             <DataGrid
                 rows={props.data}
                 columns={getColumns()}
                 initialState={{
                     pagination: {
                         paginationModel: {
-                            pageSize: 5,
+                            pageSize: 7,
                         },
                     },
                 }}
                 slots={{
                     noRowsOverlay: CustomNoRowsOverlay,
                 }}
-                pageSizeOptions={[5]}
+                pageSizeOptions={[7]}
                 //checkboxSelection
                 disableRowSelectionOnClick
             />

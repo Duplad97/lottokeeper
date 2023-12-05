@@ -1,18 +1,20 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { reset } from "../../store/userSlice";
+import { reset } from "../store/userSlice";
+import { resetOperator } from "../store/operatorSlice";
 
 interface IProps {
     show: boolean
     setShow: Function
 }
 
-function ResetPlayerDialog(props:IProps) {
+function ResetDialog(props:IProps) {
 
     const dispatch = useDispatch();
     
     const resetGame = () => {
         dispatch(reset());
+        dispatch(resetOperator());
         props.setShow(false);
     }
 
@@ -33,4 +35,4 @@ function ResetPlayerDialog(props:IProps) {
         </Dialog>
     )
 }
-export default ResetPlayerDialog;
+export default ResetDialog;

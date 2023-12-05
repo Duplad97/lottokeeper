@@ -8,6 +8,8 @@ body {
 //Pages
 @import "./pages/home.page.scss";
 @import "./pages/player.page.scss";
+@import "./pages/operator.page.scss";
 
 //Components
-@import "./components/ticket-dialog.component.scss"
+@import "./components/ticket-dialog.component.scss";
+@import "./components/draw-tickets-dialog.component.scss";

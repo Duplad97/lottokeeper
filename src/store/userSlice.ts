@@ -6,8 +6,9 @@ export interface ITicket {
     numbers: number[]
     drawn: boolean
     date: Date
-    score?: number
+    score: number
     prize?: number
+    drawDate?: Date
 }
 
 export interface IUserState {
